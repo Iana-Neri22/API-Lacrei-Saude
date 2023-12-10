@@ -6,24 +6,25 @@ from rest_framework import status
 def entity_manager(request: Request, url_parameter, model, object_serializer, id_field):
 
     if request.method == 'GET':
-        get_method(request, url_parameter, model, object_serializer)
-   
+        return get_method(request, url_parameter, model, object_serializer)
+
     if request.method == 'POST':
-        post_method(request, object_serializer)
+        return post_method(request, object_serializer)
     
     if request.method == 'PUT':
-        put_method(request, id_field, model, object_serializer)
+        return put_method(request, id_field, model, object_serializer)
     
     if request.method == 'DELETE':
-        delete_method(request, id_field, model)
+        return delete_method(request, id_field, model)
   
 
 def get_method(request, url_parameter, model, object_serializer):
+ 
     try:
         if request.GET[url_parameter]:
 
             entity_id = request.GET[url_parameter]
-
+ 
             try:
                 entity = model.objects.get(pk=entity_id)
             except:
